@@ -20,19 +20,19 @@ public class Category extends Auditable
             unique = true)
     private String categoryname;
 
-    @OneToMany(mappedBy = "category",
-            cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("category")
-    private List<Interest> interests = new ArrayList<>();
+//    @OneToMany(mappedBy = "category",
+//            cascade = CascadeType.ALL)
+//    @JsonIgnoreProperties("category")
+//    private List<Interest> interests = new ArrayList<>();
 
     public Category()
     {
     }
 
-    public Category(String categoryName, List<Interest> interests)
+    public Category(String categoryname/*, List<Interest> interests*/)
     {
-        this.categoryname = categoryName;
-        this.interests = interests;
+        this.categoryname = categoryname;
+//        this.interests = interests;
     }
 
     public long getCategoryid()
@@ -45,25 +45,25 @@ public class Category extends Auditable
         this.categoryid = categoryid;
     }
 
-    public String getCategoryName()
+    public String getCategoryname()
     {
         return categoryname;
     }
 
-    public void setCategoryName(String categoryName)
+    public void setCategoryname(String categoryname)
     {
-        this.categoryname = categoryName;
+        this.categoryname = categoryname;
     }
 
-    public List<Interest> getInterests()
-    {
-        return interests;
-    }
-
-    public void setInterests(List<Interest> interests)
-    {
-        this.interests = interests;
-    }
+//    public List<Interest> getInterests()
+//    {
+//        return interests;
+//    }
+//
+//    public void setInterests(List<Interest> interests)
+//    {
+//        this.interests = interests;
+//    }
 
     @Override
     public String toString()
@@ -71,7 +71,7 @@ public class Category extends Auditable
         return "Category{" +
                 "categoryid=" + categoryid +
                 ", categoryname='" + categoryname + '\'' +
-                ", interests=" + interests +
+//                ", interests=" + interests +
                 '}';
     }
 }

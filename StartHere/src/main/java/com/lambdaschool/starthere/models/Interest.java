@@ -2,26 +2,30 @@ package com.lambdaschool.starthere.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lambdaschool.starthere.logging.Loggable;
+import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@ApiModel(value = "Interest", description = "The Interest Entity")
 @Loggable
 @Entity
-@Table(name = "interests")
+@Table(name = "interest")
 public class Interest extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long interestid;
 
-    @Column(nullable = false,
-            unique = true)
+//    @Column(nullable = false,
+//            unique = true)
     private String interestname;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
-    @JsonIgnoreProperties("interests")
-    private User user;
+    @OneToMany(mappedBy = "interest",
+            cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("interest")
+    private List<UserInterests> userinterests = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "categoryid",
@@ -33,10 +37,9 @@ public class Interest extends Auditable
     {
     }
 
-    public Interest(String interestname, User user, Category category)
+    public Interest(String interestname, Category category)
     {
         this.interestname = interestname;
-        this.user = user;
         this.category = category;
     }
 
@@ -50,24 +53,24 @@ public class Interest extends Auditable
         this.interestid = interestid;
     }
 
-    public String getInterestName()
+    public String getInterestname()
     {
         return interestname;
     }
 
-    public void setInterestName(String interestName)
+    public void setInterestname(String interestname)
     {
         this.interestname = interestname;
     }
 
-    public User getUser()
+    public List<UserInterests> getUserinterests()
     {
-        return user;
+        return userinterests;
     }
 
-    public void setUser(User user)
+    public void setUserinterests(List<UserInterests> userinterests)
     {
-        this.user = user;
+        this.userinterests = userinterests;
     }
 
     public Category getCategory()
@@ -78,5 +81,15 @@ public class Interest extends Auditable
     public void setCategory(Category category)
     {
         this.category = category;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Interest{" +
+                "interestid=" + interestid +
+                ", interestname='" + interestname + '\'' +
+                ", category=" + category +
+                '}';
     }
 }
